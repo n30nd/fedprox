@@ -1,0 +1,28 @@
+# config.yaml
+num_clients: 3
+num_epochs: 1
+batch_size: 10
+clients_per_round: 2
+fraction_fit: 0.1
+learning_rate: 1e-3
+num_rounds: 2
+partitioning: "imbalance_label"
+dataset_name: "chest_xray"
+dataset_seed: 42
+alpha: 0.5
+sigma: 0.1
+labels_per_client: 2  # only used when partitioning is label quantity
+momentum: 0.9
+weight_decay: 0.00001
+mu: 0.01
+
+dataset:
+  # dataset config
+  name: ${dataset_name}
+  partitioning: ${partitioning}
+  batch_size: ${batch_size} # batch_size = batch_size_ratio * total_local_data_size
+  val_split: 0.0
+  seed: ${dataset_seed}
+  alpha: ${alpha}
+  sigma: ${sigma}
+  labels_per_client: ${labels_per_client}
