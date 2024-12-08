@@ -151,17 +151,20 @@ def select_clients(trainloaders, clients_per_round):
 
 def evaluate(model, testloader):
     """Đánh giá mô hình trên tập kiểm tra."""
+    # print('evaluate on', device)
+    model.to(DEVICE)
     model.eval()  # Chuyển sang chế độ đánh giá
     correct = 0
     total = 0
-    
+
     with torch.no_grad():
         for data, target in testloader:
+            data, target = data.to(DEVICE), target.to(DEVICE)
             output = model(data)
             _, predicted = torch.max(output, 1)
             total += target.size(0)
             correct += (predicted == target).sum().item()
     
     accuracy = 100 * correct / total
-    print(f"Test Accuracy: {accuracy:.2f}%")
+    model.to('cpu')
     return accuracy
